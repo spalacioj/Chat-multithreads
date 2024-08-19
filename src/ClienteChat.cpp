@@ -51,6 +51,7 @@ void ClienteChat::desconectar() {
     }
 }
 
+//Recibe un puerto para poder conectarse a una sala, solo se activa con un mensaje del LB
 void ClienteChat::reconectar(int puertoSala){
     desconectar();
     puerto = puertoSala;
@@ -69,6 +70,7 @@ void ClienteChat::recibirMensajes() {
             break;
         }
         std::string mensaje = std::string(buffer, bytesRecibidos);
+        //Agregando validacion si es un llamado a la funcion reconectar
         if (mensaje.substr(0, 6) == "@nueva") {
             std::string puertoStr = mensaje.substr(7);
             reconectar(std::stoi(puertoStr));

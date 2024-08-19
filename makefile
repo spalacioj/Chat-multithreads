@@ -41,7 +41,13 @@ run-servidor: $(TARGET)
 run-cliente: $(TARGET)
 	./$(TARGET) cliente 127.0.0.1 12345
 
+# Ejecutar los 3 servidores mas el load balancer
 run-servidores: $(TARGET)
 	./$(TARGET) servidores 127.0.0.1 12346 12347 12348
+
+# Ejecutar la funcion del monitor
+run-monitor: $(TARGET)
+	./$(TARGET) monitor 127.0.0.1 12346 12347 12348
+
 # Declarar reglas como phony
-.PHONY: all clean run-servidor run-cliente run-servidores
+.PHONY: all clean run-servidor run-cliente run-servidores run-monitor

@@ -5,9 +5,12 @@
 #include <thread>
 #include <cstring>
 
+// Constructor que crea el vector con los puertos de la sala
 ServidorLB::ServidorLB(int puerto1, int puerto2, int puerto3)
     : puertosLB{puerto1, puerto2, puerto3} {}
 
+
+// Metodo para iniciar el servidor de load balancer
 void ServidorLB::iniciar() {
     // Crear el socket del servidor
     descriptorServidor = socket(AF_INET, SOCK_STREAM, 0);
@@ -52,6 +55,7 @@ void ServidorLB::iniciar() {
     }
 }
 
+// En este metodo se agrega el manejo de comandos para que el cliente pueda elegir la sala a la cual conectarse
 void ServidorLB::manejarLB(int descriptorCliente){
     char buffer[1024];
 
@@ -70,7 +74,7 @@ void ServidorLB::manejarLB(int descriptorCliente){
 
         std::string mensaje = std::string(buffer, bytesRecibidos);
 
-        // Procesar comandos del protocolo
+        // Procesar comandos de la sala a elegir
         if (mensaje == "1") {
             std::string ComandoSala = "@nueva " + std::to_string(puertosLB[0]);
             send(descriptorCliente, ComandoSala.c_str(), ComandoSala.size(), 0);

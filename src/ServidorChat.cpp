@@ -71,7 +71,8 @@ void ServidorChat::manejarCliente(int descriptorCliente) {
     std::cout << nombreUsuario;
     if(nombreUsuario == "monitor"){
         int usuariosActivos = ServidorChat::getUsuarios();
-        send(descriptorCliente, &usuariosActivos, sizeof(usuariosActivos), 0);
+        std::string usuariosText = std::to_string(usuariosActivos);
+        send(descriptorCliente, usuariosText.c_str(), usuariosText.size(), 0);
         close(descriptorCliente);
         return;
     }
