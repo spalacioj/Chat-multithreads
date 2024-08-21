@@ -21,7 +21,7 @@ bool Monitor::conectarAlServidor(int puerto) {
     inet_pton(AF_INET, direccionIP.c_str(), &direccionServidor.sin_addr);
 
     if (connect(descriptorCliente, (sockaddr*)&direccionServidor, sizeof(direccionServidor)) == -1) {
-        std::cerr << "Error al conectar al servidor balanceador.\n";
+        //std::cerr << "Error al conectar al servidor balanceador.\n";
         return false;
     }
 
@@ -59,39 +59,10 @@ void Monitor::consultarEstadoSalas() {
             std::string usuariosEnSala = recibirDatos();
             std::cout << "Sala " << (i + 1) << " tiene " << usuariosEnSala << " usuarios\n";
         } else {
-            std::cout << "La sala " << (i + 1) << "esta caida";
+            std::cout << "La sala " << (i + 1) << " esta caida\n";
         }
         desconectar();
     }
-    
-    /*if (!conectarAlServidor()) {
-        return;
-    }
-
-    for (int i = 1; i <= 3; ++i) {
-        std::string comando = "monitor";
-        send(descriptorCliente, comando.c_str(), comando.size(), 0);
-        int usuariosEnSala = recibirDatos();
-        if (usuariosEnSala >= 0) {
-            std::cout << "Sala " << i << " tiene " << usuariosEnSala << " usuarios.\n";
-        } else {
-            std::cout << "No se pudo obtener la información de la Sala " << i << ".\n";
-        }
-    }*/
 
     desconectar();
 }
-
-/*int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "Uso: " << argv[0] << " <direccionIP> <puerto>\n";
-        return 1;
-    }
-
-    std::string direccionIP = argv[1];
-    int puertoLB = std::stoi(argv[2]);
-
-    Monitor monitor(direccionIP, puertoLB);
-    monitor.consultarEstadoSalas();
-    return 0;
-}*/

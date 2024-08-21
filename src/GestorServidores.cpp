@@ -20,7 +20,7 @@ void GestorServidores::iniciarServidor(int puerto){
 }
 
 void GestorServidores::iniciarLB(){
-    ServidorLB servidorLB(puerto1, puerto2, puerto3);
+    ServidorLB servidorLB(puerto1, puerto2, puerto3, direccionIP);
     servidorLB.iniciar();
 }
 
@@ -33,7 +33,7 @@ void GestorServidores::iniciarServidores(int puerto1, int puerto2, int puerto3){
     std::thread servidor2(&GestorServidores::iniciarServidor, this, puerto2);
     std::thread servidor3(&GestorServidores::iniciarServidor, this, puerto3);
 
-    //liberar los hilos del hilo principal
+    //liberar los 6hilos del hilo principal
     LB.detach();
     servidor1.detach();
     servidor2.detach();
